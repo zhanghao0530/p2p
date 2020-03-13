@@ -35,7 +35,7 @@
         <!-- 未登录状态 -->
         <div class="register">
             <h3>动力金融网历史年化收益率</h3>
-            <h4><span id="avg">13.8</span> %</h4>
+            <h4><span id="avg" th:text="${historyAverageRate}">15.8</span> %</h4>
             <div class="bn_register"><a th:href="@{/loan/page/register}" class="btn-1">注册领888大红包</a></div>
             <div class="login">有账号? <a th:href="@{/loan/page/login}">立即登录</a></div>
         </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="jinxin-data">
             <h3>平台用户数</h3>
-            <div class="data"><span id="hzxx_ljrs">88888</span> 位</div>
+            <div class="data"><span id="hzxx_ljrs" th:text="${allUserCount}">88888</span> 位</div>
             <div class="line"></div>
             <h3>累计成交额</h3>
             <div class="data"><span id="hzxx_ljje">1000000000</span> 元</div>

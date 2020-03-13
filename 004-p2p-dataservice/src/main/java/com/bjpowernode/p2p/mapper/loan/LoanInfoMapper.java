@@ -15,4 +15,6 @@ public interface LoanInfoMapper {
     int updateByPrimaryKeySelective(LoanInfo record);
 
     int updateByPrimaryKey(LoanInfo record);
+
+    Double selectHistoryAverageRate();
 }

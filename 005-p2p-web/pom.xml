@@ -40,6 +40,11 @@
             <artifactId>003-p2p-exterface</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.bjpowernode.p2p</groupId>
+            <artifactId>002-p2p-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
