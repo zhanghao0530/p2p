@@ -217,4 +217,12 @@
   <select id="selectHistoryAverageRate" resultType="java.lang.Double">
     select cast(avg(rate)as DECIMAL(10,2)) from b_loan_info
   </select>
+
+  <select id="selectLoinInfoListByProductType" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" />
+      from b_loan_info
+      where product_type = #{productType}
+      order by rate desc
+      limit ${currentPage},#{pageSize}
+  </select>
 </mapper>

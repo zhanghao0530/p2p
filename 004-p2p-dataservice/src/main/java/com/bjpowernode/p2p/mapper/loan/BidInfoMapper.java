@@ -15,4 +15,6 @@ public interface BidInfoMapper {
     int updateByPrimaryKeySelective(BidInfo record);
 
     int updateByPrimaryKey(BidInfo record);
+
+    Double selectAllBidMoney();
 }

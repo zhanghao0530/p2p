@@ -15,6 +15,9 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
+    /**
+     * 获取平台注册总人数
+     * @return
+     */
     Long selectAllUserCount();
 }

@@ -3,14 +3,16 @@ package com.bjpowernode.p2p.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.bjpowernode.p2p.common.constant.Constants;
 import com.bjpowernode.p2p.mapper.loan.LoanInfoMapper;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.bjpowernode.p2p.model.loan.LoanInfo;
+import com.bjpowernode.p2p.service.loan.LoanInfoService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,5 +62,11 @@ public class LoanInfoServiceImpl implements LoanInfoService {
 
 
         return historyAverageRate;
+    }
+
+    @Override
+    public List<LoanInfo> queryLoanInfoListByProductType(Map<String, Object> paramMap) {
+        List<LoanInfo>loanInfoList=loanInfoMapper.selectLoinInfoListByProductType(paramMap);
+        return loanInfoList;
     }
 }

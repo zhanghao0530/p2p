@@ -126,7 +126,8 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!--获取平台注册总人数-->
   <select id="selectAllUserCount" resultType="java.lang.Long">
-    select count(*) from u_user
-  </select>
+        select count(*) from u_user
+    </select>
 </mapper>
