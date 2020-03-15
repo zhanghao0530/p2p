@@ -3,6 +3,9 @@ package com.bjpowernode.p2p.mapper.loan;
 
 import com.bjpowernode.p2p.model.loan.BidInfo;
 
+import java.util.List;
+import java.util.Map;
+
 public interface BidInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,4 +20,6 @@ public interface BidInfoMapper {
     int updateByPrimaryKey(BidInfo record);
 
     Double selectAllBidMoney();
+
+    List<BidInfo> selectRecentlyBidInfoByProductId(Map<String, Object> paramMap);
 }

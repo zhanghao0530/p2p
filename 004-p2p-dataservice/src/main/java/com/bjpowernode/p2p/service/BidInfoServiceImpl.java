@@ -10,12 +10,15 @@ package com.bjpowernode.p2p.service;/**
 import com.alibaba.dubbo.config.annotation.Service;
 import com.bjpowernode.p2p.common.constant.Constants;
 import com.bjpowernode.p2p.mapper.loan.BidInfoMapper;
+import com.bjpowernode.p2p.model.loan.BidInfo;
 import com.bjpowernode.p2p.service.loan.BidInfoService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,5 +57,11 @@ public class BidInfoServiceImpl implements BidInfoService {
 
 
         return allBidMoney;
+    }
+
+    @Override
+    public List<BidInfo> queryRecentlyBidInfoByProductId(Map<String, Object> paramMap) {
+        List<BidInfo> bidInfoList=bidInfoMapper.selectRecentlyBidInfoByProductId(paramMap);
+        return bidInfoList;
     }
 }

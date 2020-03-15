@@ -1,5 +1,10 @@
 package com.bjpowernode.p2p.service.loan;
 
+import com.bjpowernode.p2p.model.loan.BidInfo;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * ClassName:BidInfoService
  * Package:com.bjpowernode.p2p.service
@@ -14,4 +19,6 @@ public interface BidInfoService {
      * @return
      */
     Double queryAllBidMoney();
+
+    List<BidInfo> queryRecentlyBidInfoByProductId(Map<String, Object> paramMap);
 }

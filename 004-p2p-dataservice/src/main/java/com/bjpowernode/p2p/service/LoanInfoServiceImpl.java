@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.bjpowernode.p2p.common.constant.Constants;
 import com.bjpowernode.p2p.mapper.loan.LoanInfoMapper;
 import com.bjpowernode.p2p.model.loan.LoanInfo;
+import com.bjpowernode.p2p.model.vo.PaginationVo;
 import com.bjpowernode.p2p.service.loan.LoanInfoService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,27 @@ public class LoanInfoServiceImpl implements LoanInfoService {
     public List<LoanInfo> queryLoanInfoListByProductType(Map<String, Object> paramMap) {
         List<LoanInfo>loanInfoList=loanInfoMapper.selectLoinInfoListByProductType(paramMap);
         return loanInfoList;
+    }
+    //业务层设计方法的粒度要比DA0要粗,因为业务层提供的都是-个一个完整的业务功能
+    //DAO往往是实现这个业务方法中的某一个步骤
+    @Override
+    public PaginationVo<LoanInfo> queryLoanInfoListByPage(Map<String, Object> paramMap) {
+        PaginationVo paginationVo=new PaginationVo();
+
+        Long total=loanInfoMapper.selectTotal(paramMap);
+
+        List<LoanInfo>loanInfoList=loanInfoMapper.selectLoinInfoListByProductType(paramMap);
+
+        paginationVo.setDataList(loanInfoList);
+
+        paginationVo.setTotal(total);
+
+        return paginationVo;
+    }
+
+    @Override
+    public LoanInfo queryLoanInfoById(Integer id) {
+        LoanInfo loanInfo=loanInfoMapper.selectByPrimaryKey(id);
+        return loanInfo;
     }
 }

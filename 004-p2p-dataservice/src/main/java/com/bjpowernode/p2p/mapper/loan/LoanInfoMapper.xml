@@ -18,6 +18,7 @@
     <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
     <result column="version" jdbcType="INTEGER" property="version" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, product_name, rate, cycle, release_time, product_type, product_no, product_money, 
     left_product_money, bid_min_limit, bid_max_limit, product_status, product_full_time, 
@@ -221,8 +222,20 @@
   <select id="selectLoinInfoListByProductType" resultMap="BaseResultMap">
       select <include refid="Base_Column_List" />
       from b_loan_info
-      where product_type = #{productType}
+      <where>
+        <if test="productType != null">
+          product_type = #{productType}
+        </if>
+      </where>
       order by rate desc
-      limit ${currentPage},#{pageSize}
+      limit #{currentPage},#{pageSize}
+  </select>
+
+  <select id="selectTotal" resultType="java.lang.Long">
+    select count(*) from b_loan_info  <where>
+    <if test="productType != null">
+      product_type = #{productType}
+    </if>
+  </where>
   </select>
 </mapper>

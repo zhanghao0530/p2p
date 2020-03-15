@@ -22,4 +22,6 @@ public interface LoanInfoMapper {
     Double selectHistoryAverageRate();
 
     List<LoanInfo> selectLoinInfoListByProductType(Map<String, Object> paramMap);
+
+    Long selectTotal(Map<String, Object> paramMap);
 }
