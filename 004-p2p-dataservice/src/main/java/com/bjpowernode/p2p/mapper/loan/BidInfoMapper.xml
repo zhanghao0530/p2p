@@ -9,6 +9,29 @@
     <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime" />
     <result column="bid_status" jdbcType="INTEGER" property="bidStatus" />
   </resultMap>
+
+  <!--关联查询中：(投资记录与用户)一对一的关系-->
+  <resultMap id="BidUserBaseResultMap" type="com.bjpowernode.p2p.model.loan.BidInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="loan_id" jdbcType="INTEGER" property="loanId" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="bid_money" jdbcType="DOUBLE" property="bidMoney" />
+    <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime" />
+    <result column="bid_status" jdbcType="INTEGER" property="bidStatus" />
+
+   <!--描述一对一关系需要用到以下标签-->
+    <association property="user" javaType="com.bjpowernode.p2p.model.user.User">
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+      <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+      <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+      <result column="header_image" jdbcType="VARCHAR" property="headerImage" />
+    </association>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     id, loan_id, uid, bid_money, bid_time, bid_status
   </sql>
@@ -103,4 +126,18 @@
       bid_status = #{bidStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAllBidMoney" resultType="java.lang.Double">
+   select sum(bid_money) from b_bid_info
+
+  </select>
+
+  <select id="selectRecentlyBidInfoByProductId" resultMap="BidUserBaseResultMap">
+    select b.*,u.*
+    from b_bid_info b
+    left join u_user u
+    on b.uid=u.id
+    where loan_id =#{loanId}
+    order by bid_time desc
+    limit #{currentPage},#{pageSize};
+  </select>
 </mapper>

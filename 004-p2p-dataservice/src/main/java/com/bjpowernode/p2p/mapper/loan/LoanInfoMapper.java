@@ -3,6 +3,9 @@ package com.bjpowernode.p2p.mapper.loan;
 
 import com.bjpowernode.p2p.model.loan.LoanInfo;
 
+import java.util.List;
+import java.util.Map;
+
 public interface LoanInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,4 +18,10 @@ public interface LoanInfoMapper {
     int updateByPrimaryKeySelective(LoanInfo record);
 
     int updateByPrimaryKey(LoanInfo record);
+
+    Double selectHistoryAverageRate();
+
+    List<LoanInfo> selectLoinInfoListByProductType(Map<String, Object> paramMap);
+
+    Long selectTotal(Map<String, Object> paramMap);
 }
