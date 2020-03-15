@@ -78,7 +78,7 @@ public class IndexController {
         List<LoanInfo>uLoanInfoList= loanInfoService.queryLoanInfoListByProductType(paramMap);
         model.addAttribute("uLoanInfoList", uLoanInfoList);
 
-        //获取散标产品：产品类型：2 显示第一页 每页显示8个
+        //获取散标产品：产品类型：2 显示第一页 每页显示8个.
         paramMap.put("productType", Constants.PRODUCT_TYPE_S);
         paramMap.put("pageSize", 8);
         List<LoanInfo>sLoanInfoList= loanInfoService.queryLoanInfoListByProductType(paramMap);
