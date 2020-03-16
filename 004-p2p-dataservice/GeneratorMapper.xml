@@ -15,7 +15,7 @@
         <!-- 配置数据库连接信息 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
 
-                        connectionURL="jdbc:mysql://192.168.239.130:3306/p2p"
+                        connectionURL="jdbc:mysql://192.168.239.131:3306/p2p"
                         userId="root"
                         password="333">
         </jdbcConnection>
