@@ -29,4 +29,8 @@ public class Constants {
      * 散标产品类型
      */
     public static final Integer PRODUCT_TYPE_S = 2;
+    /**
+     * 用户信息
+     */
+    public static final String SESSION_USER = "user";
 }

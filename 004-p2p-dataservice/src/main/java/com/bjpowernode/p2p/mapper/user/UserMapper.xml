@@ -33,6 +33,14 @@
       #{lastLoginTime,jdbcType=TIMESTAMP}, #{headerImage,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bjpowernode.p2p.model.user.User">
+    <!--查询mysql自增id值，并赋值给传入的user对象的id属性
+    keyProperty描述表中主键名称
+    order 时机
+    -->
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      select @@IDENTITY as id
+    </selectKey>
+
     insert into u_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -130,4 +138,12 @@
   <select id="selectAllUserCount" resultType="java.lang.Long">
         select count(*) from u_user
     </select>
+
+  <select id="selectUserByPhone" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from
+    u_user
+    where
+    phone=#{phone}
+  </select>
 </mapper>
