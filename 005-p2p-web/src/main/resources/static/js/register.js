@@ -57,7 +57,7 @@ $(function() {
 			//c) 手机号是否已被注册
 			$.ajax({
 				url: basepath + "/loan/checkPhone",
-				data: "phone=" + phone,
+				data: "phone="+phone,
 				method: "get",
 				success: function (data) {
 					if (data.code == 1) {
@@ -94,14 +94,28 @@ $(function() {
 		} else {
 			showSuccess("loginPassword");
 		}
+	});
+
+	$("#messageCode").on("blur",function () {
+		var messageCode = $.trim($("#messageCode").val());
+		if(""==messageCode){
+			showError("messageCode","请输入验证码");
+		}else {
+			showSuccess("messageCode");
+		}
 	})
+
 
 	//点击注册后判断所有验证是否都通过
 	$("#btnRegist").on("click", function () {
 		var phone =$.trim($("#phone").val());
 		var loginPassword=$.trim($("#loginPassword").val());
+		var messageCode =$.trim($("#messageCode").val());
 		$("#phone").blur();
 		$("#loginPassword").blur();
+		$("#messageCode").blur();
+
+
 
 		/*var flag=true;
 		$("div[id$='Err']").each(function () {
@@ -128,29 +142,80 @@ $(function() {
 				type:"post",
 				data:{
 					"phone":phone,
-					"loginPassword":$.md5(loginPassword)
+					"loginPassword":$.md5(loginPassword),
+					"messageCode":messageCode
 				},
 				success:function (data) {
 					if(data.code==1){
 						//注册成功
-						window.location.href=basepath+"/index";
+						window.location.href=basepath+"/loan/page/realName";
 					}else {
 						//注册失败
-						showError("loginPassword",data.message);
+						showError("messageCode",data.message);
 						$("#loginPassword").val("");
+						$("#messageCode").val("");
 
 					}
 				},
 				error:function (data) {
-					showError("loginPassword","系统繁忙，请稍候再试");
+					showError("messageCode","系统繁忙，请稍候再试");
 					$("#loginPassword").val("");
 				}
 			})
 		}
+	});
+
+
+	//给获取验证码按钮绑定单击事件
+	$("#messageCodeBtn").on("click",function () {
+		var phone =$.trim($("#phone").val());
+		var loginPassword =$.trim($("#loginPassword").val());
+		$("#phone").blur();
+		$("#loginPassword").blur();
+
+		hideError("messageCode");
+		//判断前项是否验证通过
+		var errorText=$("div[id$='Err']").text();
+		if(""==errorText){
+			if(!$("#messageCodeBtn").hasClass("on")){
+
+				//发起ajax请求
+				$.ajax({
+					url:basepath+"/loan/messageCode",
+					type:"post",
+					data:"phone="+phone,
+					success:function (data) {
+						alert("您的短信验证码是"+data.data)
+						if(data.code==1){
+							$.leftTime(60,function (d) {
+								if(d.status){
+									//如果状态为成功,给按钮添加on的样式
+									$("#messageCodeBtn").addClass("on");
+									$("#messageCodeBtn").html((d.s=="00"?"60":d.s)+"秒后获取")
+								}else {
+									$("#messageCodeBtn").removeClass("on");
+									$("#messageCodeBtn").html("获取验证码");
+								}
+							})
+						}else {
+							showError("messageCode",data.message);
+
+						}
+					},
+					error:function (data) {
+						showError("messageCode","短信平台异常，请稍后重试");
+					}
+				})
+
+
+			}
+		}
+
+
 	})
 
 		
-	})
+})
 
 
 

@@ -29,4 +29,12 @@ public class Result extends HashMap<String,Object> {
 
         return result;
     }
+
+    public static Result success(String data){
+        Result result=new Result();
+        result.put("code", 1);
+        result.put("success", true);
+        result.put("data", data);
+        return result;
+    }
 }

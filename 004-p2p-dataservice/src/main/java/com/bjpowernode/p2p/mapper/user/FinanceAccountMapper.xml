@@ -68,4 +68,9 @@
       available_money = #{availableMoney,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectfinanceAccountByUid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List">
+  </include>
+    from u_finance_account where uid=#{uid}
+  </select>
 </mapper>

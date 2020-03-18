@@ -7,6 +7,8 @@
       <module fileurl="file://$PROJECT_DIR$/003-p2p-exterface/003-p2p-exterface.iml" filepath="$PROJECT_DIR$/003-p2p-exterface/003-p2p-exterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/004-p2p-dataservice/004-p2p-dataservice.iml" filepath="$PROJECT_DIR$/004-p2p-dataservice/004-p2p-dataservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/005-p2p-web/005-p2p-web.iml" filepath="$PROJECT_DIR$/005-p2p-web/005-p2p-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HttpClient/HttpClient.iml" filepath="$PROJECT_DIR$/HttpClient/HttpClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p2p-httpclient/p2p-httpclient.iml" filepath="$PROJECT_DIR$/p2p-httpclient/p2p-httpclient.iml" />
     </modules>
   </component>
 </project>

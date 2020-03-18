@@ -8,6 +8,8 @@
         <option value="$PROJECT_DIR$/003-p2p-exterface/pom.xml" />
         <option value="$PROJECT_DIR$/004-p2p-dataservice/pom.xml" />
         <option value="$PROJECT_DIR$/005-p2p-web/pom.xml" />
+        <option value="$PROJECT_DIR$/p2p-httpclient/pom.xml" />
+        <option value="$PROJECT_DIR$/HttpClient/pom.xml" />
       </list>
     </option>
   </component>

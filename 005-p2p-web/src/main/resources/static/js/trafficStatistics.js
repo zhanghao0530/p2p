@@ -86,6 +86,16 @@ $(function(){
 	});
 	//个人信息下拉
 	$(".logged").hover(function(){
+
+		$.ajax({
+			url:basepath+"/loan/myFinanceAccount",
+			type:"get",
+			success:function (data) {
+				$("#frame_top").html(data.availableMoney);
+			}
+		});
+
+
 		$(this).addClass("logged-hover");
 		$(".userinfo-drop-down",this).stop().animate({ height: '205px'},300);
 	},function(){

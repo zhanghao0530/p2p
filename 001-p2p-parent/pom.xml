@@ -19,6 +19,8 @@
         <mybatis-spring-boot-starter-version>2.0.0</mybatis-spring-boot-starter-version>
         <dubbo-spring-boot-starter-version>2.0.0</dubbo-spring-boot-starter-version>
         <zkclient.version>0.10</zkclient.version>
+        <dom4j.version>2.1.0</dom4j.version>
+        <fastjson.version>1.2.36</fastjson.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -47,6 +49,16 @@
             <groupId>com.bjpowernode.p2p</groupId>
             <artifactId>003-p2p-exterface</artifactId>
             <version>${zkclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
         </dependencies>

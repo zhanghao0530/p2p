@@ -1,20 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-    <script language="javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jQuery.md5.js}"></script>
+    <script language="javascript" type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/leftTime.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/register.js}"></script>
-    <title>注册动力金融网-动力金融网,专业的互联网金融信息服务平台</title>
-	<style type="text/css">
+    <script language="javascript" type="text/javascript" th:src="@{/js/realName.js}"></script>
+    <title>实名认证动力金融网-动力金融网,专业的互联网金融信息服务平台</title>
+    <style type="text/css">
         .testBtn-a{display: inline-block;height:40px;line-height:30px;padding:0 8px; border:0; border-radius:0px;color:#fff;background:rgb(65,133,244);cursor: pointer;}
         .testBtn-a.on{background:#c9c9c9;color:#666;cursor: default;}
     </style>
-
-
 </head>
 
 <body>
@@ -26,35 +23,37 @@
 <div class="login-body regBody">
     <div class="mainBox">
         <div class="homeWap">
-
             <div class="reg-step">
                 <ul class="clearfix">
                     <li>注册</li>
-                    <li class="none">实名认证</li>
+                    <li>实名认证</li>
                     <li class="last">完成</li>
                 </ul>
             </div>
-
             <div class="login-cnt reg-body clearfix">
                 <div class="fl">
-                    <div class="reg-link">已有帐号？<a th:href="@{/loan/page/login}">登录</a></div>
+                    <div class="reg-link">暂不认证？<a th:href="@{/index}">跳过</a></div>
                     <div class="login-form reg-form">
-                        <h2>用户注册</h2>
+                        <h2>实名认证</h2>
 
                         <div class="login-box clearfix" style="z-index:100;">
                             <label>手机号</label>
-                            <input type="text" id="phone" name="phone" class="input_text" maxlength="11"
-                                   placeholder="请输入11位手机号码" autocomplete="off"/>
+                            <input type="text" id="phone" name="phone" class="input_text" maxlength="11" placeholder="请输入11位手机号码" autocomplete="off" />
                             <span id="phoneOk" class="ok" style="display:none;"></span>
                             <div id="phoneErr" class="form-hint" style="display:none;"></div>
                         </div>
 
+                        <div class="login-box clearfix" style="z-index:100;">
+                            <label>真实姓名</label>
+                            <input type="text" id="realName" name="realName" class="input_text" maxlength="25" placeholder="请输入您的真实姓名" autocomplete="off"/>
+                            <span id="realNameOk" class="ok" style="display:none;"></span>
+                            <div id="realNameErr" class="form-hint" style="display:none;"></div>
+                        </div>
                         <div class="login-box clearfix " style="z-index:90;">
-                            <label>登录密码</label>
-                            <input type="password" id="loginPassword" name="loginPassword" class="input_text"
-                                   maxlength="20" placeholder="请输入6-20位英文和数字混合密码" autocomplete="off"/>
-                            <span id="loginPasswordOk" class="ok" style="display:none;"></span>
-                            <div id="loginPasswordErr" class="form-hint" style="display:none;z-index:90;"></div>
+                            <label>身份证号</label>
+                            <input type="text" id="idCard" name="idCard" class="input_text" maxlength="18" placeholder="请输入15位或18位身份证号码" autocomplete="off" />
+                            <span id="idCardOk" class="ok" style="display:none;"></span>
+                            <div id="idCardErr" class="form-hint" style="display:none;z-index:90;"></div>
                         </div>
 
                         <div class="login-box clearfix" style="z-index:60;">
@@ -68,20 +67,25 @@
                             <div id="messageCodeErr" class="form-hint" style="display:none;"></div>
                         </div>
 
+                        <!--<div class="login-box clearfix" style="z-index:60;">
+                            <label>图形验证码</label>
+                            <div class="yzm-box">
+                                <input id="captcha" name="captcha" type="text" class="yzm" maxlength="10" placeholder="点击右侧图片可刷新" onblur="checkCaptcha();"/>
+                                <a style='cursor:pointer;'></a>
+                            </div>
+                            <span id="captchaOk" class="ok" style="display:none;"></span>
+                            <div id="captchaErr" class="form-hint" style="display:none;"></div>
+                        </div>-->
                         <div class="remember" style="z-index:60;">
                 <span class="on">
                 <input id="agree" name="agree" type="checkbox"/>我已阅读并同意<a
                         href="javascript:alertBox('mask','agreement');"><font
-                        style="color: red;">《动力金融网&trade;注册服务协议》</font></a>
+                        style="color: red;">《动力金融网&trade;实名认证服务协议》</font></a>
                 </span>
                         </div>
-
                         <div class="bn-login">
-                            <button class="fail" id="btnRegist" disabled>
-                                注&nbsp;&nbsp;册
-                            </button>
+                            <button class="fail" id="btnRegist" disabled >认&nbsp;&nbsp;证</button>
                         </div>
-
                     </div>
                 </div>
                 <div class="reg-right">
@@ -105,9 +109,14 @@
 <div th:include="commons/footer :: html"></div>
 <!--页脚end-->
 
+<!-- 实名认证协议模板start -->
+<!--<span id="includeAgreement">
+    <div th:include="commons/realNameAagreement :: html"></div>
+</span>-->
+<!-- 实名认证协议模板end -->
+
 <!--遮罩层start-->
 <div id="mask" class="dialog-overlay" style="display:none;"></div>
 <!--遮罩层end-->
-
 </body>
 </html>

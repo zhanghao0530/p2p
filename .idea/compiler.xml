@@ -11,6 +11,8 @@
         <module name="003-p2p-exterface" />
         <module name="004-p2p-dataservice" />
         <module name="005-p2p-web" />
+        <module name="HttpClient" />
+        <module name="p2p-httpclient" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +22,8 @@
       <module name="004-p2p-dataservice" target="1.8" />
       <module name="005-p2p-web" target="1.8" />
       <module name="005-p2p-web (2)" target="1.8" />
+      <module name="HttpClient" target="1.8" />
+      <module name="p2p-httpclient" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -21,4 +21,10 @@ public interface UserService {
      * @param loginPassword
      */
     User register(String phone, String loginPassword) throws Exception;
+
+    /**
+     * 根据用户标识获取用户信息
+     * @return
+     */
+    int modifyUserById(User updateUser);
 }
