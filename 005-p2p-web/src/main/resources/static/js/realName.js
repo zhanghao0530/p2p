@@ -138,7 +138,7 @@ $(function() {
 				},
 				success:function (data) {
 					if (data.code == 1) {
-						window.location.href = basepath+"/index";
+						window.location.href = basepath+"/loan/myCenter";
 					} else {
 						$("#messageCode").val("");
 						showError("messageCode",data.message);

@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" th:inline="javascript">
-        //localhost:8080/p2p
-        var basepath=[[${#httpServletRequest.getScheme()+"://"+#httpServletRequest.getServerName()+":"+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]
-        //alert(basepath);
-    </script>
+
 </head>
 <body>
+<script type="text/javascript" th:inline="javascript">
+    //localhost:8080/p2p
+    var basepath=[[${#httpServletRequest.getScheme()+"://"+#httpServletRequest.getServerName()+":"+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]
+    //alert(basepath);
 
+
+    var requestURLAndQueryString =[[${#request.requestURL+"?"+#request.queryString}]]
+
+    $(function () {
+        $("#loginPageBtn").on("click",function () {
+            var loginPageUrl =$("#localPageUrl").val();
+           window.location.href=basepath+"/loan/page/login?localPageUrl="+loginPageUrl;
+        })
+    })
+
+</script>
+<input type="hidden" id="localPageUrl" th:value="${#strings.replace(#httpServletRequest.requestURL + '?' + #httpServletRequest.queryString,'?null','')}"/>
 </body>
 </html>

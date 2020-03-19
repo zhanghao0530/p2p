@@ -33,4 +33,8 @@ public class Constants {
      * 用户信息
      */
     public static final String SESSION_USER = "user";
+    /**
+     * 投资排行榜
+     */
+    public static final String INVEST_TOP = "investTop";
 }

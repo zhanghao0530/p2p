@@ -8,11 +8,16 @@ package com.bjpowernode.p2p.web;/**
  */
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.bjpowernode.p2p.common.constant.Constants;
 import com.bjpowernode.p2p.model.loan.BidInfo;
 import com.bjpowernode.p2p.model.loan.LoanInfo;
+import com.bjpowernode.p2p.model.user.FinanceAccount;
+import com.bjpowernode.p2p.model.user.User;
+import com.bjpowernode.p2p.model.vo.BidUser;
 import com.bjpowernode.p2p.model.vo.PaginationVo;
 import com.bjpowernode.p2p.service.loan.BidInfoService;
 import com.bjpowernode.p2p.service.loan.LoanInfoService;
+import com.bjpowernode.p2p.service.user.FinanceAccountService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +40,9 @@ public class LoanController {
 
     @Reference(interfaceClass = BidInfoService.class,version = "1.0.0",check = false)
     private BidInfoService bidInfoService;
+
+    @Reference(interfaceClass = FinanceAccountService.class,version = "1.0.0",check = false)
+    private FinanceAccountService financeAccountService;
 
     @RequestMapping("/loan/loan")
     public String loan(Model model, HttpServletRequest request,
@@ -67,8 +75,10 @@ public class LoanController {
 
 
 
-        //TODO
+
         //投资排行榜
+        List<BidUser>bidUserList=bidInfoService.queryBidUserTop();
+        model.addAttribute("bidUserList", bidUserList);
 
         return "loan";
     }
@@ -87,8 +97,14 @@ public class LoanController {
         List<BidInfo> bidInfoList=bidInfoService.queryRecentlyBidInfoByProductId(paramMap);
         model.addAttribute("bidInfoList", bidInfoList);
 
-        //TODO
-        //查询账户可用余额
+        //查询session中user对象判断用户是否登录
+        User sessionUser= (User) request.getSession().getAttribute(Constants.SESSION_USER);
+        if(ObjectUtils.allNotNull(sessionUser)){
+
+            //查询账户可用余额
+            FinanceAccount financeAccount=financeAccountService.queryFinaceAccountByUid(sessionUser.getId());
+            model.addAttribute("financeAccount", financeAccount);
+        }
 
         return "loanInfo";
     }

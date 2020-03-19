@@ -24,6 +24,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -285,6 +286,74 @@ public class UserController {
         return financeAccount;
     }
 
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/loan/logout")
+    public String logout(HttpServletRequest request){
+
+        //清除session
+        request.getSession().invalidate();
+//        request.getSession().removeAttribute(Constants.SESSION_USER);
+        return "redirect:/index";
+    }
+
+    //跳转到登录页面
+    @RequestMapping("/loan/page/login")
+    public String pageLogin(HttpServletRequest request, Model model,
+                            @RequestParam(value = "localPageUrl",required = true)String localPageUrl){
+
+        model.addAttribute("redirectUrl", localPageUrl);
+        return "login";
+    }
+
+    @PostMapping("/loan/login")
+    public @ResponseBody Result login(@RequestParam(value = "phone",required = true)String phone,
+                                      @RequestParam(value = "loginPassword",required = true)String loginPassword,
+                                      @RequestParam(value = "messageCode",required = true)String messageCode,
+                                     HttpServletRequest request){
+
+
+        try {
+            //验证验证码
+            String redisMessageCode =redisService.get(phone);
+            if(!StringUtils.equals(redisMessageCode, messageCode)){
+                return Result.error("短信验证码不正确");
+            }
+
+            //通过手机号和密码验证是否正确，如果正确则修改最近登录时间
+
+            User user=userService.login(phone,loginPassword);
+            request.getSession().setAttribute(Constants.SESSION_USER, user);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error("用户登录异常");
+        }
+        return Result.success();
+    }
+
+    @RequestMapping("/loan/myCenter")
+    public String myCenter(HttpServletRequest request,Model model){
+
+
+        //获取session中的user对象
+        User sessionUser= (User) request.getSession().getAttribute(Constants.SESSION_USER);
+
+        //根据用户 标识获取帐户信息
+        FinanceAccount financeAccount=financeAccountService.queryFinaceAccountByUid(sessionUser.getId());
+        model.addAttribute("financeAccount", financeAccount) ;
+        //以下三个由大家自己完成作业
+        //根据 用户标识获取最近投资记录
+        //根据用户标识获取最近充值 记录
+        //根据用户标识获取最近收益记录
+
+
+        return "myCenter";
+    }
 
 }
 

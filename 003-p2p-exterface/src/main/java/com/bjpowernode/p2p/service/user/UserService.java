@@ -27,4 +27,12 @@ public interface UserService {
      * @return
      */
     int modifyUserById(User updateUser);
+
+    /**
+     * 登录功能
+     * @param phone
+     * @param loginPassword
+     * @return
+     */
+    User login(String phone, String loginPassword) throws Exception;
 }

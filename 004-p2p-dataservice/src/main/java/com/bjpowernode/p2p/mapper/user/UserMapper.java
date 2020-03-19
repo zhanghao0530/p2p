@@ -27,4 +27,11 @@ public interface UserMapper {
      * @return
      */
     User selectUserByPhone(String phone);
+
+    /**
+     * 判断用户登陆是否成功
+     * @param userDetail
+     * @return
+     */
+    User queryUserByPhoneAndLoginPassword(User userDetail);
 }

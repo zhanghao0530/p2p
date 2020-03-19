@@ -238,4 +238,11 @@
     </if>
   </where>
   </select>
+  <update id="updateLeftProductMoney">
+    update b_loan_info
+    set
+    left_product_money=left_product_money-#{bidMoney},
+    version=version+1
+    where id=#{loanId} and version=#{version} and (left_product_money-#{bidMoney})>=0
+  </update>
 </mapper>

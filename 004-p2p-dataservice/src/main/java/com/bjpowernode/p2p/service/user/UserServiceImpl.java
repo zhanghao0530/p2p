@@ -97,4 +97,25 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.updateByPrimaryKeySelective(updateUser);
     }
+
+    @Override
+    public User login(String phone, String loginPassword) throws Exception {
+        User userDetail = new User();
+        userDetail.setPhone(phone);
+        userDetail.setLoginPassword(loginPassword);
+
+        User user=userMapper.queryUserByPhoneAndLoginPassword(userDetail);
+        if(!ObjectUtils.allNotNull(user)){
+            throw new Exception("用户名或密码有误");
+        }
+        //更新用户最近登录时间
+        User updateUser = new User();
+        updateUser.setId(user.getId());
+        updateUser.setLastLoginTime(new Date());
+        int i=userMapper.updateByPrimaryKeySelective(updateUser);
+        if(i<=0){
+            throw new Exception("更新用户最近登录时间失败");
+        }
+        return user;
+    }
 }
