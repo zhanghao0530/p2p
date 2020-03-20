@@ -140,4 +140,10 @@
     order by bid_time desc
     limit #{currentPage},#{pageSize};
   </select>
+
+  <select id="selectAllBidInfoByLoanId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from b_bid_info
+    where loan_id =#{loanId}
+  </select>
 </mapper>

@@ -22,4 +22,11 @@ public interface BidInfoMapper {
     Double selectAllBidMoney();
 
     List<BidInfo> selectRecentlyBidInfoByProductId(Map<String, Object> paramMap);
+
+    /**
+     * 获取已满标产品的所有投资记录
+     * @param loanId
+     * @return
+     */
+    List<BidInfo> selectAllBidInfoByLoanId(Integer loanId);
 }

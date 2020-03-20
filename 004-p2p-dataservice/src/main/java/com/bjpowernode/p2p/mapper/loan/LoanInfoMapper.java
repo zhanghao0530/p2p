@@ -31,4 +31,10 @@ public interface LoanInfoMapper {
      * @return
      */
     int updateLeftProductMoney(Map<String, Object> paramMap);
+
+    /**
+     * 查询所有已满标的产品
+     * @return
+     */
+    List<LoanInfo> selectLoanInfoListByProductStatus(int productStatus);
 }

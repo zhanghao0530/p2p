@@ -82,4 +82,9 @@
         where
           uid = #{uid} and (available_money - #{bidMoney})>=0
     </update>
+  <update id="updateFinanceAccountByIncomeBack">
+    update u_finance_account set
+    available_money = available_money + #{bidMoney} +#{incomeMoney}
+    where uid =#{uid}
+  </update>
 </mapper>

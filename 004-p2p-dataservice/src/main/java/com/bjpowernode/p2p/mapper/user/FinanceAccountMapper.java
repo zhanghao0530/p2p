@@ -27,4 +27,9 @@ public interface FinanceAccountMapper {
      */
     int updateFinanceAccountByBid(Map<String, Object> paramMap);
 
+    /**
+     * 根据投资返还更新账户信息
+     * @param paramMap
+     */
+    void updateFinanceAccountByIncomeBack(Map<String, Object> paramMap);
 }

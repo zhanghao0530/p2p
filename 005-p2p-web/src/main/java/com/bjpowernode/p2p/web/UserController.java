@@ -331,7 +331,7 @@ public class UserController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.error("用户登录异常");
+            return Result.error(e.getMessage());
         }
         return Result.success();
     }
