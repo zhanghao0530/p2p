@@ -61,7 +61,11 @@ $(function(){
                                 <li class="icon-recharge"><a href="toRecharge.html"><i></i><span>充值</span></a></li>
                                 <li class="icon-invest" style="margin-left:85px;"><a href="loan/loan"><i></i><span>投资</span></a></li>
                             </ul>
-                            <div class="enter">进入“<a href="@{/loan/myCenter}">我的小金库</a>”</div>
+                            <div class="enter">
+                                进入“<a th:href="@{/loan/myCenter}">我的小金库</a>”</br>
+                            </div>
+                            <div class="enter">进入“<a th:href="@{/loan/page/modifyLoginPassword}">修改登录密码</a>”</div>
+
                             <div class="exit"><a th:href="@{/loan/logout}">退出</a></div>
                         </div>
                     </div>

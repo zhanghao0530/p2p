@@ -15,14 +15,12 @@ import com.bjpowernode.p2p.model.user.User;
 import com.bjpowernode.p2p.service.loan.RedisService;
 import com.bjpowernode.p2p.service.user.FinanceAccountService;
 import com.bjpowernode.p2p.service.user.UserService;
-import com.bjpowernode.p2p.util.HttpClientUtils;
-import com.bjpowernode.p2p.util.Result;
+import com.bjpowernode.p2p.common.util.Result;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +31,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * 作者：章昊
@@ -301,7 +298,7 @@ public class UserController {
     //跳转到登录页面
     @RequestMapping("/loan/page/login")
     public String pageLogin(HttpServletRequest request, Model model,
-                            @RequestParam(value = "localPageUrl",required = true)String localPageUrl){
+                            @RequestParam(value = "localPageUrl",required = false)String localPageUrl){
 
         model.addAttribute("redirectUrl", localPageUrl);
         return "login";
@@ -353,6 +350,59 @@ public class UserController {
 
 
         return "myCenter";
+    }
+
+    @RequestMapping("/loan/page/modifyLoginPassword")
+    public String toModifyLoginPassword(Model model,HttpServletRequest request){
+        User sessionUser = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+        if(!ObjectUtils.allNotNull(sessionUser)){
+            return "/loan/page/login";
+        }
+        String phone = sessionUser.getPhone();
+        model.addAttribute("phone", phone);
+        return "modifyLoginPasswird";
+    }
+
+    @RequestMapping("/loan/checkLoginPassword")
+    public @ResponseBody Result checkLoginPassword(HttpServletRequest request,
+                                                    @RequestParam(value = "oldLoginPassword")String oldLoginPassword){
+        User sessionUser = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+
+        User userDetail=userService.queryUserByPhone(sessionUser.getPhone());
+        if(!StringUtils.equals(oldLoginPassword, userDetail.getLoginPassword())){
+            return Result.error("密码不正确");
+        }
+
+        return Result.success();
+    }
+
+    @RequestMapping("/loan/modifyLoginPassword")
+    public @ResponseBody Result modifyLoginPassword(@RequestParam(value = "phone",required = true)String phone,
+                                                    @RequestParam(value = "newLoginPassword",required = true)String newLoginPassword,
+                                                    @RequestParam(value = "messageCode",required = false)String messageCode,
+                                                    HttpServletRequest request){
+        try {
+            User sessionUser = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+            String loginPhone=sessionUser.getPhone();
+            Integer uid=sessionUser.getId();
+            Map<String,Object>paramMap=new HashMap<>();
+            if(!StringUtils.equals(loginPhone, phone)){
+                String redisMessageCode =redisService.get(phone);
+                if(!StringUtils.equals(redisMessageCode, messageCode)){
+                    return Result.error("验证码不正确");
+                }
+            }
+            paramMap.put("newLoginPassword", newLoginPassword);
+            paramMap.put("uid", uid);
+            int i=userService.modifyLoginPassword(paramMap);
+            if(i<=0){
+                return Result.error("修改密码失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        request.getSession().invalidate();
+        return Result.success();
     }
 
 }

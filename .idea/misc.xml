@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/HttpClient/pom.xml" />
         <option value="$PROJECT_DIR$/006-p2p-timer/pom.xml" />
         <option value="$PROJECT_DIR$/alipay-sdk-java/pom.xml" />
+        <option value="$PROJECT_DIR$/007-p2p-pay/pom.xml" />
       </list>
     </option>
   </component>

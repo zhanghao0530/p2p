@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/004-p2p-dataservice/004-p2p-dataservice.iml" filepath="$PROJECT_DIR$/004-p2p-dataservice/004-p2p-dataservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/005-p2p-web/005-p2p-web.iml" filepath="$PROJECT_DIR$/005-p2p-web/005-p2p-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/006-p2p-timer/006-p2p-timer.iml" filepath="$PROJECT_DIR$/006-p2p-timer/006-p2p-timer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/007-p2p-pay/007-p2p-pay.iml" filepath="$PROJECT_DIR$/007-p2p-pay/007-p2p-pay.iml" />
       <module fileurl="file://$PROJECT_DIR$/HttpClient/HttpClient.iml" filepath="$PROJECT_DIR$/HttpClient/HttpClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/alipay-sdk-java/alipay-sdk-java.iml" filepath="$PROJECT_DIR$/alipay-sdk-java/alipay-sdk-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/p2p-httpclient/p2p-httpclient.iml" filepath="$PROJECT_DIR$/p2p-httpclient/p2p-httpclient.iml" />

@@ -1,6 +1,6 @@
-package com.bjpowernode.p2p.util;/**
+package com.bjpowernode.p2p.common.util;/**
  * ClassName:Result
- * Package:com.bjpowernode.p2p.util
+ * Package:com.bjpowernode.p2p.common.util
  * Description:平台响应对象
  *
  * @date:2020/3/16 18:56

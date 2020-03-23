@@ -23,4 +23,10 @@ public interface RedisService {
      * @return
      */
     String get(String key);
+
+    /**
+     * 生成唯一数字
+     * @return
+     */
+    Long getOnlyNumber();
 }

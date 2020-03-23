@@ -1,4 +1,4 @@
-package com.bjpowernode.p2p.util;
+package com.bjpowernode.p2p.common.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

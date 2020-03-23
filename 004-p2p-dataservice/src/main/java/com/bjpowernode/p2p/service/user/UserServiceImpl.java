@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -117,5 +118,15 @@ public class UserServiceImpl implements UserService {
             throw new Exception("更新用户最近登录时间失败");
         }
         return user;
+    }
+
+    @Override
+    public int modifyLoginPassword(Map<String, Object> paramMap) {
+        User updateUser = new User();
+        Integer uid= (Integer) paramMap.get("uid");
+        String loginPassword= (String) paramMap.get("newLoginPassword");
+        updateUser.setId(uid);
+        updateUser.setLoginPassword(loginPassword);
+        return userMapper.updateByPrimaryKeySelective(updateUser);
     }
 }

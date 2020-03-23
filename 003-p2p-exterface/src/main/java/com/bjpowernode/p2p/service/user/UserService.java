@@ -2,6 +2,8 @@ package com.bjpowernode.p2p.service.user;
 
 import com.bjpowernode.p2p.model.user.User;
 
+import java.util.Map;
+
 public interface UserService {
     /**
      * 获取平台注册总人数
@@ -35,4 +37,11 @@ public interface UserService {
      * @return
      */
     User login(String phone, String loginPassword) throws Exception;
+
+    /**
+     * 修改密码
+     * @param paramMap
+     * @return
+     */
+    int modifyLoginPassword(Map<String, Object> paramMap);
 }

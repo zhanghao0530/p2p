@@ -11,8 +11,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.bjpowernode.p2p.common.constant.Constants;
 import com.bjpowernode.p2p.model.user.User;
 import com.bjpowernode.p2p.service.loan.BidInfoService;
-import com.bjpowernode.p2p.util.Result;
-import lombok.SneakyThrows;
+import com.bjpowernode.p2p.common.util.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 作者：章昊

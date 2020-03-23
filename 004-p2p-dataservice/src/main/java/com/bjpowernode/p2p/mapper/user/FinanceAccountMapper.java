@@ -32,4 +32,11 @@ public interface FinanceAccountMapper {
      * @param paramMap
      */
     void updateFinanceAccountByIncomeBack(Map<String, Object> paramMap);
+
+    /**
+     * 根据充值结果更新账户可用余额
+     * @param paramMap
+     * @return
+     */
+    int updateFinanceAccountByRecharge(Map<String, Object> paramMap);
 }

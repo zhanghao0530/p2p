@@ -9,6 +9,7 @@ package com.bjpowernode.p2p.timer;/**
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bjpowernode.p2p.service.loan.IncomeRecordService;
+import com.bjpowernode.p2p.service.loan.RechargeRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,10 @@ public class TimerManager {
 
     @Reference(interfaceClass = IncomeRecordService.class,version = "1.0.0",check = false)
     private IncomeRecordService incomeRecordService;
+
+
+    @Reference(interfaceClass = RechargeRecordService.class,version = "1.0.0",check = false)
+    private RechargeRecordService rechargeRecordService;
 
     //@Scheduled(cron="0/5 * * * * ?")
     public void  generateIncomePlan(){
@@ -45,4 +50,13 @@ public class TimerManager {
         log.info("----------收益返还结束----------");
     }
 
+    @Scheduled(cron = "0/5 * * * * ?")
+    public void dealRechargeRecord() throws Exception {
+        log.info("---------------处理掉单开始-------------------");
+
+        rechargeRecordService.dealRechargeRecord();
+
+        log.info("---------------处理掉单结束-------------------");
+
+    }
 }

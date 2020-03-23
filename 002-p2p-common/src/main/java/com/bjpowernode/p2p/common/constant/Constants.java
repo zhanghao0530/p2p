@@ -37,4 +37,8 @@ public class Constants {
      * 投资排行榜
      */
     public static final String INVEST_TOP = "investTop";
+    /**
+     * 唯一数字
+     */
+    public static final String ONLY_NUMBER = "onlyNumber";
 }
