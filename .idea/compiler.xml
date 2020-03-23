@@ -16,6 +16,7 @@
         <module name="alipay-sdk-java" />
         <module name="HttpClient" />
         <module name="p2p-httpclient" />
+        <module name="QRcode" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -30,6 +31,7 @@
       <module name="alipay-sdk-java" target="1.5" />
       <module name="HttpClient" target="1.8" />
       <module name="p2p-httpclient" target="1.5" />
+      <module name="QRcode" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

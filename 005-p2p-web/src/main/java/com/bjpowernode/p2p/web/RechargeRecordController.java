@@ -19,6 +19,11 @@ import com.bjpowernode.p2p.model.user.User;
 import com.bjpowernode.p2p.common.util.DateUtils;
 import com.bjpowernode.p2p.service.loan.RechargeRecordService;
 import com.bjpowernode.p2p.service.loan.RedisService;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.springframework.stereotype.Controller;
@@ -28,7 +33,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
@@ -225,11 +233,96 @@ public class RechargeRecordController {
 
 
     @RequestMapping("/loan/toWxpayRecharge")
-    public void toWxpayRecharge(HttpServletRequest request,
+    public String toWxpayRecharge(HttpServletRequest request,Model model,
                                  @RequestParam(value = "rechargeMoney",required = true)Double rechargeMoney){
-        out.println("------------");
+
+
+        String rechargeNo="";
+        try {
+
+            User sessionUser = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+
+            //生成充值记录
+            RechargeRecord rechargeRecord = new RechargeRecord();
+            rechargeRecord.setUid(sessionUser.getId());
+            rechargeRecord.setRechargeStatus("0");
+            rechargeRecord.setRechargeTime(new Date());
+            rechargeRecord.setRechargeMoney(rechargeMoney);
+            rechargeRecord.setRechargeDesc("微信充值");
+            //生成订单号
+            rechargeNo=rechargeNo= DateUtils.getTimestamp() + redisService.getOnlyNumber();
+            rechargeRecord.setRechargeNo(rechargeNo);
+
+            int addRechargeCount=rechargeRecordService.addRechargeRecord(rechargeRecord);
+            if(addRechargeCount<=0){
+                model.addAttribute("trade_msg", "生成充值记录失败");
+                return "toRechargeBack";
+            }
+            model.addAttribute("rechargeNo", rechargeNo);
+            model.addAttribute("rechargeMoney", rechargeMoney);
+            model.addAttribute("rechargeDate", new Date());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("trade_msg", "生成充值记录失败");
+            return "toRechargeBack";
+
+        }
+        return "showQRCode";
     }
 
+    @RequestMapping("/loan/generateQRCode")
+    public void generateQRCode(HttpServletRequest request, HttpServletResponse response,
+                               @RequestParam(value = "rechargeNo",required = true) String rechargeNo,
+                               @RequestParam(value = "rechargeMoney",required = true) Double rechargeMoney) throws Exception {
+
+        Map<String,Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("body","微信扫码支付");
+        paramMap.put("out_trade_no",rechargeNo);
+        paramMap.put("total_fee",rechargeMoney);
+
+        //调用pay工程的统一下单API接口
+        String jsonString = HttpClientUtils.doPost("http://localhost:9090/pay/api/wxpay", paramMap);
+
+        //将json格式的字符串转换为JSON对象
+        JSONObject jsonObject = JSONObject.parseObject(jsonString);
+
+        //获取return_code
+        String returnCode = jsonObject.getString("return_code");
+
+        //判断通信标识
+        if (!StringUtils.equals("SUCCESS",returnCode)) {
+            response.sendRedirect(request.getContextPath()+"/loan/toRechargeBack");
+        }
+
+        //获取业务处理结果result_code
+        String resultCode = jsonObject.getString("result_code");
+
+        //判断业务处理结果
+        if (!StringUtils.equals("SUCCESS", resultCode)) {
+            response.sendRedirect(request.getContextPath()+"/loan/toRechargeBack");
+        }
+
+        //获取code_url
+        String codeUrl = jsonObject.getString("code_url");
+
+        //将code_url生成一个二维码图片
+
+        Map<EncodeHintType,Object> encodeHintTypeObjectMap = new HashMap<EncodeHintType, Object>();
+        encodeHintTypeObjectMap.put(EncodeHintType.CHARACTER_SET,"UTF-8");
+
+        //创建一个矩阵对象
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(codeUrl, BarcodeFormat.QR_CODE,200,200,encodeHintTypeObjectMap);
+
+        OutputStream outputStream = response.getOutputStream();
+
+        //将矩阵对象转换成流
+        MatrixToImageWriter.writeToStream(bitMatrix,"jpg",outputStream);
+
+        outputStream.flush();
+        outputStream.close();
+
+    }
 
 
 
